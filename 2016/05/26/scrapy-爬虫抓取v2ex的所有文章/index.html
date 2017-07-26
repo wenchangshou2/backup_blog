@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="犀牛" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="利用scrapy进行抓取v2ex的所有的文章，其中包含了基本的scrapy的用法，以及处理出现request 403错误的解决">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy 爬虫抓取v2ex的所有文章">
+<meta property="og:url" content="http://yoursite.com/2016/05/26/scrapy-爬虫抓取v2ex的所有文章/index.html">
+<meta property="og:site_name" content="犀牛">
+<meta property="og:description" content="利用scrapy进行抓取v2ex的所有的文章，其中包含了基本的scrapy的用法，以及处理出现request 403错误的解决">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午4.16.05.png">
+<meta property="og:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-19%20%E4%B8%8B%E5%8D%883.57.30.png">
+<meta property="og:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午5.01.30.png">
+<meta property="og:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午5.02.05.png">
+<meta property="og:updated_time" content="2017-07-26T07:36:37.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy 爬虫抓取v2ex的所有文章">
+<meta name="twitter:description" content="利用scrapy进行抓取v2ex的所有的文章，其中包含了基本的scrapy的用法，以及处理出现request 403错误的解决">
+<meta name="twitter:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午4.16.05.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/05/26/scrapy-爬虫抓取v2ex的所有文章/"/>
+
+
+
+
+
+  <title>scrapy 爬虫抓取v2ex的所有文章 | 犀牛</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">犀牛</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/26/scrapy-爬虫抓取v2ex的所有文章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="罗布">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="犀牛">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">scrapy 爬虫抓取v2ex的所有文章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-26T15:36:11+08:00">
+                2016-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>利用scrapy进行抓取v2ex的所有的文章，其中包含了基本的scrapy的用法，以及处理出现request 403错误的解决<br><a id="more"></a></p>
+<h1 id="v2exScray"><a href="#v2exScray" class="headerlink" title="v2exScray"></a>v2exScray</h1><p>项目代码全部上传到<a href="https://github.com/wenchangshou2/v2exScray" target="_blank" rel="external">github</a><br>这个项目的作用是将v2ex的所有的文章全部爬取下来最终抓取到的内容如下图所示<br><img src="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午4.16.05.png" alt="屏幕快照 2016-05-19 下午4.16.05"></p>
+<h2 id="文件的目录"><a href="#文件的目录" class="headerlink" title="文件的目录"></a>文件的目录</h2><p><img src="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-19%20%E4%B8%8B%E5%8D%883.57.30.png" alt="屏幕快照 2016-05-19 下午3.57.30"></p>
+<h2 id="创建爬虫项目"><a href="#创建爬虫项目" class="headerlink" title="创建爬虫项目"></a>创建爬虫项目</h2><p>scrapy创建工程的方式特别的简单，只要在shell下面输入下面的语句<br><img src="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午5.01.30.png" alt="屏幕快照 2016-05-19 下午5.01.30"></p>
+<p>执行成功之后会自动创建我们工程所需要的文件</p>
+<p><img src="http://o7ez1faxc.bkt.clouddn.com/2016-05-19-屏幕快照 2016-05-19 下午5.02.05.png" alt="屏幕快照 2016-05-19 下午5.02.05"></p>
+<h2 id="解决403的错误"><a href="#解决403的错误" class="headerlink" title="解决403的错误"></a>解决403的错误</h2><p>在抓取的过程当中返回的都是403的错误，网站采用了防爬技术anti-web-crawling technique（Amazon所用),后来通过通过队列的形式随机更换user_aget来发送请求来解决这个问题</p>
+<p>我们需要使用下面的rotate_useragent.py的代码来进行更换请求的头，同时需要在settings.py里面将DOWNLOADER_MIDDLEWARES的注释去掉并且进行更正成正确的引用 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">    <span class="string">'v2ex.rotate_useragent.RotateUserAgentMiddleware'</span>: <span class="number">400</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>rotate_useragent.py文件的代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment">#-*-coding:utf-8-*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> scrapy.contrib.downloadermiddleware.useragent <span class="keyword">import</span> UserAgentMiddleware</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RotateUserAgentMiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, user_agent=<span class="string">''</span>)</span>:</span></div><div class="line">        self.user_agent = user_agent</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        <span class="comment">#这句话用于随机选择user-agent</span></div><div class="line">        ua = random.choice(self.user_agent_list)</div><div class="line">        <span class="keyword">if</span> ua:</div><div class="line">            request.headers.setdefault(<span class="string">'User-Agent'</span>, ua)</div><div class="line"></div><div class="line">    <span class="comment">#the default user_agent_list composes chrome,I E,firefox,Mozilla,opera,netscape</span></div><div class="line">    <span class="comment">#for more user agent strings,you can find it in http://www.useragentstring.com/pages/useragentstring.php</span></div><div class="line">    user_agent_list = [\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"</span>\</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKithttp://o7ez1faxc.bkt.clouddn.com/2016-05-19-%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-05-19%20%E4%B8%8B%E5%8D%884.16.05.png/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span>,\</div><div class="line">        <span class="string">"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"</span></div><div class="line">       ]</div></pre></td></tr></table></figure>
+<p>I## items配置<br>items.py里面定义了我们需要爬取的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Item,Field</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TencentItem</span><span class="params">(Item)</span>:</span></div><div class="line">    title=Field() <span class="comment">#文档标题</span></div><div class="line">    url=Field()  <span class="comment">#文章的链接</span></div></pre></td></tr></table></figure>
+<h2 id="最终元素的保存"><a href="#最终元素的保存" class="headerlink" title="最终元素的保存"></a>最终元素的保存</h2><p>在scrapy里面会有一个piplines.py文章，爬虫会将抓取到的元素调用这个文件里面的函数进行存储</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonWithEncodingTencentPipeline</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.file = codecs.open(<span class="string">'v2ex.json'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)<span class="comment">#设置encoding来防止乱码</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        line = json.dumps(dict(item), ensure_ascii=<span class="keyword">False</span>) + <span class="string">"\n"</span><span class="comment">#ensure_ascii为true的话输出的是一个ascii字符，想输出中文的话需要将其设置为False</span></div><div class="line">        self.file.write(line)</div><div class="line">        <span class="keyword">return</span> item</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spider_closed</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.file.close(</div><div class="line">)</div></pre></td></tr></table></figure>
+<h2 id="爬虫的代码"><a href="#爬虫的代码" class="headerlink" title="爬虫的代码"></a>爬虫的代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">rules = [</div><div class="line">       Rule(</div><div class="line">           sle(allow=(<span class="string">"recent\?p=\d&#123;1,5&#125;"</span>)), follow=<span class="keyword">True</span>, callback=<span class="string">'parse_item'</span>)</div><div class="line">   ]</div></pre></td></tr></table></figure>
+<p>下面是rule的源代码,当flollow为True的时候会自动调用 callback的函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> follow <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">    self.follow = <span class="keyword">False</span> <span class="keyword">if</span> callback <span class="keyword">else</span> <span class="keyword">True</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">    self.follow = follow</div></pre></td></tr></table></figure>
+<p>下面的是一篇文章的html的标记,我们现在需要取出所有div中class为’cell item’的元素，然后进行遍历<br>然后再分别取出item_title的text和href的内容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cell item"</span> <span class="attr">style</span>=<span class="string">""</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">"0"</span> <span class="attr">cellspacing</span>=<span class="string">"0"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"100%"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">valign</span>=<span class="string">"top"</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span>[</div><div class="line">![](//cdn.v2ex.co/avatar/2dff/59fb/128998_normal.png?m=1446796863)](/member/jiangew)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"10"</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"auto"</span> <span class="attr">valign</span>=<span class="string">"middle"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"item_title"</span>&gt;</span>[</div><div class="line">跳槽季：北京~Java~4 年~服务端码农](/t/279762#reply6)<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sep5"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"small fade"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"votes"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>[</div><div class="line">Java](/go/java)  **[jiangew](/member/jiangew)** 2 分钟前  最后回复来自</div><div class="line">**[feiyang21687](/member/feiyang21687)**<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"70"</span> <span class="attr">align</span>=<span class="string">"right"</span> <span class="attr">valign</span>=<span class="string">"middle"</span>&gt;</span></div><div class="line">[6](/t/279762#reply6)</div><div class="line"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>获取内容的代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sites_even = sel.css(<span class="string">'div.cell.item'</span>)</div><div class="line"></div><div class="line">       <span class="keyword">for</span> site <span class="keyword">in</span> sites_even:</div><div class="line">           item=TencentItem()</div><div class="line">           item[<span class="string">'title'</span>]=site.css(<span class="string">'.item_title a'</span>).xpath(<span class="string">'text()'</span>).extract()[<span class="number">0</span>]</div><div class="line">           item[<span class="string">'url'</span>]=<span class="string">'http://v2ex.com'</span>+site.css(<span class="string">'.item_title a'</span>).xpath(<span class="string">'@href'</span>).extract()[<span class="number">0</span>]</div><div class="line"></div><div class="line">           items.append(item)</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/26/docker-初级教程/" rel="next" title="docker 初级教程">
+                <i class="fa fa-chevron-left"></i> docker 初级教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/python-爬虫-下载豆瓣歌单/" rel="prev" title="python 爬虫 下载豆瓣歌单">
+                python 爬虫 下载豆瓣歌单 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="罗布" />
+          <p class="site-author-name" itemprop="name">罗布</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#v2exScray"><span class="nav-number">1.</span> <span class="nav-text">v2exScray</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的目录"><span class="nav-number">1.1.</span> <span class="nav-text">文件的目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建爬虫项目"><span class="nav-number">1.2.</span> <span class="nav-text">创建爬虫项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决403的错误"><span class="nav-number">1.3.</span> <span class="nav-text">解决403的错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终元素的保存"><span class="nav-number">1.4.</span> <span class="nav-text">最终元素的保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫的代码"><span class="nav-number">1.5.</span> <span class="nav-text">爬虫的代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">罗布</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
