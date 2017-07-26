@@ -197,6 +197,27 @@
   </entry>
   
   <entry>
+    <title>利用scrapy和MongoDB来开发一个爬虫</title>
+    <link href="http://yoursite.com/2016/07/26/%E5%88%A9%E7%94%A8scrapy%E5%92%8CMongoDB%E6%9D%A5%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/"/>
+    <id>http://yoursite.com/2016/07/26/利用scrapy和MongoDB来开发一个爬虫/</id>
+    <published>2016-07-26T07:43:54.000Z</published>
+    <updated>2017-07-26T07:44:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天我们利用scrapy框架来抓取Stack Overflow里面最新的问题（问题标题和网址），并且将这些问题保存到MongoDb当中，直接提供给客户进行查询。<br><a id="more"></a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天我们利用scrapy框架来抓取Stack Overflow里面最新的问题（问题标题和网址），并且将这些问题保存到MongoDb当中，直接提供给客户进行查询。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python 匿名函数</title>
     <link href="http://yoursite.com/2016/07/26/python-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0/"/>
     <id>http://yoursite.com/2016/07/26/python-匿名函数/</id>
