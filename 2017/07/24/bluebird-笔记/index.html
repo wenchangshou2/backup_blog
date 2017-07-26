@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="有关bluebird的常用操作">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bluebird 笔记">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/bluebird-笔记/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="有关bluebird的常用操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-26T06:49:01.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bluebird 笔记">
+<meta name="twitter:description" content="有关bluebird的常用操作">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/bluebird-笔记/"/>
+
+
+
+
+
+  <title>bluebird 笔记 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/bluebird-笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="changshou.wen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bluebird 笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T14:47:51+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有关bluebird的常用操作<br><a id="more"></a></p>
+<h1 id="bluebird-笔记"><a href="#bluebird-笔记" class="headerlink" title="bluebird 笔记"></a>bluebird 笔记</h1><h2 id="将传统方法封闭成promise方式"><a href="#将传统方法封闭成promise方式" class="headerlink" title="将传统方法封闭成promise方式"></a>将传统方法封闭成promise方式</h2><p> Promise.promisify能够将原有的函数封装成promise的调用方式。<br> 下面的是传统的异步调用方式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;readFile&#125; <span class="keyword">from</span> <span class="string">'fs'</span></div><div class="line">readFile(<span class="string">'file1.txt'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(err)&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'read file error'</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`read file data:<span class="subst">$&#123;data.toString()&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>利用Promise.promisify转换函数后的调用方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>)</div><div class="line"><span class="keyword">var</span> readFile = <span class="built_in">Promise</span>.promisify(<span class="built_in">require</span>(<span class="string">"fs"</span>).readFile);</div><div class="line">readFile(<span class="string">"file1.txt"</span>,<span class="string">"utf8"</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">contents</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`read file data:<span class="subst">$&#123;contents&#125;</span>`</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'error read file'</span>,e);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>除了用Promise.prosisify之后bluebird还提供了一种能够转换整个调用对象的方法 Promise.promisifyAll。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>)</div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">Promise</span>.promisifyAll(<span class="built_in">require</span>(<span class="string">"fs"</span>));</div><div class="line">fs.readFile(<span class="string">"file1.txt"</span>,<span class="string">"utf8"</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">contents</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`read file data:<span class="subst">$&#123;contents&#125;</span>`</span>);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'error read file'</span>,e);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="处理多个promise返回值"><a href="#处理多个promise返回值" class="headerlink" title="处理多个promise返回值"></a>处理多个promise返回值</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">'bluebird'</span>);</div><div class="line"><span class="keyword">var</span> fs=<span class="built_in">Promise</span>.promisifyAll(<span class="built_in">require</span>(<span class="string">"fs"</span>))</div><div class="line"><span class="built_in">Promise</span>.all([</div><div class="line">    fs.readFileAsync(<span class="string">"file1.txt"</span>),</div><div class="line">    fs.readFileAsync(<span class="string">"file2.txt"</span>)</div><div class="line">]).spread(<span class="function"><span class="keyword">function</span>(<span class="params">file1text, file2text</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (file1text === file2text) &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"files are equal"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"files are not equal"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的代码的代码是异步读取file1.txt和file2.txt文件，并且将文件的内容存入到file1text和file2text中，一旦两个文件的内容相同输出files are equal,不相同输出files are not equal。</p>
+<h2 id="多个promise-处理"><a href="#多个promise-处理" class="headerlink" title="多个promise 处理"></a>多个promise 处理</h2><blockquote>
+<p>Promise.join(</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Promise&lt;any&gt;|any values...,</div><div class="line">function handler</div></pre></td></tr></table></figure>
+<p>) -&gt; Promise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>);</div><div class="line"><span class="keyword">var</span> join = <span class="built_in">Promise</span>.join;</div><div class="line"></div><div class="line">join(getPictures(), getComments(), getTweets(),</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">pictures, comments, tweets</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"in total: "</span> + pictures.length + comments.length + tweets.length);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的的代码调用 getPictures(), getComments(), getTweets()三个异步的操作，同时输出操作的结果<br>下面的代码完成赞同于上面的代码，只不过将Promise.join换成了Promise.all，并且传一个数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>);</div><div class="line"><span class="keyword">var</span> join = <span class="built_in">Promise</span>.join;</div><div class="line"></div><div class="line"><span class="built_in">Promise</span>.all([getPictures(), getComments(), getTweets()],</div><div class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">pictures, comments, tweets</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"in total: "</span> + pictures.length + comments.length + tweets.length);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Promise-props"><a href="#Promise-props" class="headerlink" title="Promise.props"></a>Promise.props</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.props(&#123;</div><div class="line">    <span class="attr">file1</span>: fs.readFileAsync(<span class="string">"file1.txt"</span>),</div><div class="line">    <span class="attr">file2</span>: fs.readFileAsync(<span class="string">"file2.txt"</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(result.file1,result.file2);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>props能将将返回的结果放置在一个Object对象当中，可以通过result.file1来访问fs.readFileAsync(“file1.txt”)的文件内容</p>
+<h2 id="Promise-some"><a href="#Promise-some" class="headerlink" title="Promise.some"></a>Promise.some</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.some([</div><div class="line">    ping(<span class="string">"ns1.example.com"</span>),</div><div class="line">    ping(<span class="string">"ns2.example.com"</span>),</div><div class="line">    ping(<span class="string">"ns3.example.com"</span>),</div><div class="line">    ping(<span class="string">"ns4.example.com"</span>)</div><div class="line">], <span class="number">2</span>).spread(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(first, second);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面通过Promise.some方法来调用四次ping请求，输出其中最快的二次请求的信息。</p>
+<h3 id="Promise-finally"><a href="#Promise-finally" class="headerlink" title="Promise.finally"></a>Promise.finally</h3><p>finally方法有点类似于c++中的try catch..finaly，不过promise过程是否成功，都将调用finally的方法，可以在这个方法里面写一些资源的释放之类的语句。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">Promise</span>=<span class="built_in">require</span>(<span class="string">'bluebird'</span>)</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_setTimeout</span>(<span class="params">time</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">    setTimeout(resolve(<span class="string">'resolve'</span>),time);</div><div class="line">  &#125;).finally(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'success'</span>);</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line">_setTimeout(<span class="number">2000</span>).then(<span class="function">(<span class="params">content</span>)=&gt;</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(content);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="Promises-map"><a href="#Promises-map" class="headerlink" title="Promises.map"></a>Promises.map</h3><p>这个方法可以遍历Object,再通过遍历的值来直接调用 Promise方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="built_in">Promise</span>=<span class="built_in">require</span>(<span class="string">'bluebird'</span>)</div><div class="line"><span class="keyword">var</span> fs=<span class="built_in">Promise</span>.promisifyAll(<span class="built_in">require</span>(<span class="string">"fs"</span>))</div><div class="line"><span class="keyword">var</span> promise=[]</div><div class="line"><span class="keyword">var</span> filesNames=[]</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">2</span>;i++)&#123;</div><div class="line">  promise.push(fs.readFileAsync(<span class="string">`file<span class="subst">$&#123;i&#125;</span>.txt`</span>))</div><div class="line">  filesNames.push(<span class="string">`file<span class="subst">$&#123;i&#125;</span>.txt`</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//使用传统的Promise.all方法</span></div><div class="line"><span class="built_in">Promise</span>.all(promise).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'all'</span>);</div><div class="line">&#125;)</div><div class="line"><span class="comment">//通过map来批量调用</span></div><div class="line"><span class="built_in">Promise</span>.map(filesNames, (fileName) =&gt; &#123;</div><div class="line">  <span class="keyword">return</span> fs.readFileAsync(fileName)</div><div class="line">&#125;).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'done'</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="Promise-reduct"><a href="#Promise-reduct" class="headerlink" title="Promise.reduct"></a>Promise.reduct</h3><p>这个方法可以顺序的执行promise</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.reduce([<span class="string">"file1.txt"</span>, <span class="string">"file2.txt"</span>, <span class="string">"file3.txt"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">total, fileName</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fs.readFileAsync(fileName, <span class="string">"utf8"</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">contents</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> total + <span class="built_in">parseInt</span>(contents, <span class="number">10</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;, <span class="number">0</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">total</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(total);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的代码段是，顺序的读取file1,file2,file3三个文件的内容，并且将内容转换成整形，最终输出累加后的数据。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/26/mysql-自动化脚本/" rel="next" title="mysql 自动化脚本">
+                <i class="fa fa-chevron-left"></i> mysql 自动化脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/26/nodejs-express-mongo-实际一套增删改查的接口/" rel="prev" title="nodejs+express+mongo 实际一套增删改查的接口">
+                nodejs+express+mongo 实际一套增删改查的接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="changshou.wen" />
+          <p class="site-author-name" itemprop="name">changshou.wen</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bluebird-笔记"><span class="nav-number">1.</span> <span class="nav-text">bluebird 笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#将传统方法封闭成promise方式"><span class="nav-number">1.1.</span> <span class="nav-text">将传统方法封闭成promise方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理多个promise返回值"><span class="nav-number">1.2.</span> <span class="nav-text">处理多个promise返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个promise-处理"><span class="nav-number">1.3.</span> <span class="nav-text">多个promise 处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-props"><span class="nav-number">1.4.</span> <span class="nav-text">Promise.props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-some"><span class="nav-number">1.5.</span> <span class="nav-text">Promise.some</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise-finally"><span class="nav-number">1.5.1.</span> <span class="nav-text">Promise.finally</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promises-map"><span class="nav-number">1.5.2.</span> <span class="nav-text">Promises.map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise-reduct"><span class="nav-number">1.5.3.</span> <span class="nav-text">Promise.reduct</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">changshou.wen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

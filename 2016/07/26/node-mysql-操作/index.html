@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="node.js," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="node.js mysql操作">
+<meta name="keywords" content="node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node-mysql 操作">
+<meta property="og:url" content="http://yoursite.com/2016/07/26/node-mysql-操作/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="node.js mysql操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-26T07:01:32.764Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node-mysql 操作">
+<meta name="twitter:description" content="node.js mysql操作">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/26/node-mysql-操作/"/>
+
+
+
+
+
+  <title>node-mysql 操作 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/26/node-mysql-操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="changshou.wen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node-mysql 操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-26T15:01:05+08:00">
+                2016-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> node.js mysql操作<br> <a id="more"></a></p>
+<h4 id="安装node-mysql"><a href="#安装node-mysql" class="headerlink" title="安装node-mysql"></a>安装node-mysql</h4><p>在node.js采用npm的方式来进行模块的安装。node.js安装的话有两种方式可以通过-g的方式进行全局的安装，在这种模式下安装的模块可以被整个node.js的程序所引用。如果不加-g的话nodejs会在当前的目录下新建一个node_modules文件夹，并且将下载的模块放置在该文件夹下相应的目录.</p>
+<blockquote>
+<p>npm install mysql -g //全局安装<br>npm install mysql –save //下载至当前的目录下</p>
+</blockquote>
+<h4 id="运行第一个mysql-查询"><a href="#运行第一个mysql-查询" class="headerlink" title="运行第一个mysql 查询"></a>运行第一个mysql 查询</h4><p>为了方便我将mysql的root密码设置为123456，在node数据库当中新建了一张名为users的表,建表的语句与如所示。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">SET</span> <span class="keyword">NAMES</span> utf8;</div><div class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">--  Table structure for `users`</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`users`</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`users`</span> (</div><div class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`password`</span> <span class="built_in">varchar</span>(<span class="number">256</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">3</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=latin1;</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">--  Records of `users`</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">BEGIN</span>;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`users`</span> <span class="keyword">VALUES</span> (<span class="string">'zs'</span>, <span class="string">'1'</span>, <span class="string">'123456'</span>), (<span class="string">'ls'</span>, <span class="string">'2'</span>, <span class="string">'12345'</span>);</div><div class="line"><span class="keyword">COMMIT</span>;</div><div class="line"></div><div class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mysql=<span class="built_in">require</span>(<span class="string">'mysql'</span>);</div><div class="line"><span class="keyword">var</span> connection=mysql.createConnection(</div><div class="line">    &#123;</div><div class="line">        <span class="attr">host</span>:<span class="string">'localhost'</span>,</div><div class="line">        <span class="attr">user</span>:<span class="string">'root'</span>,</div><div class="line">        <span class="attr">password</span>:<span class="string">'123456'</span>,</div><div class="line">        <span class="attr">database</span>:<span class="string">'node'</span></div><div class="line">    &#125;</div><div class="line">);</div><div class="line">connection.connect();</div><div class="line"><span class="keyword">var</span> queryString=<span class="string">'SELECT * FROM users'</span>;</div><div class="line">connection.query(queryString,<span class="function"><span class="keyword">function</span>(<span class="params">err,rows,fields</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> rows)&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'user name'</span>,rows[i].name);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>同样的我们在创建createConnection连接时可以使用字符串来替代对象的方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> connection=mysql.createConnection(<span class="string">'mysql://user:pass@host/node'</span>）;</div></pre></td></tr></table></figure>
+<p>通过遍历查询的结果我们可以查询到每个字段（在上面的用例当中我们显示的是name)</p>
+<blockquote>
+<p>console.log(‘user name’,rows[i].name);</p>
+</blockquote>
+<p>query用于mysql的查询，在这里面我们使用了匿名函数的方式进行操作，一旦触及到查询的操作时会自动回调到该匿名事件当中，其中err,fields和rows分别用于显示相应的状态。</p>
+<p>对于 上面的操作是将查询所有的行之后再进行回调，倘若我们需要对其中的每一行进行处理的话，我们可以采用下面的方式进行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mysql=<span class="built_in">require</span>(<span class="string">'mysql'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> connection=mysql.createConnection(</div><div class="line">    &#123;</div><div class="line">        <span class="attr">host</span>:<span class="string">'localhost'</span>,</div><div class="line">        <span class="attr">user</span>:<span class="string">'root'</span>,</div><div class="line">        <span class="attr">password</span>:<span class="string">'a63621375'</span>,</div><div class="line">        <span class="attr">database</span>:<span class="string">'node'</span></div><div class="line">    &#125;</div><div class="line">);</div><div class="line">connection.connect();</div><div class="line"><span class="keyword">var</span> queryString=<span class="string">'SELECT * FROM users'</span>;</div><div class="line"><span class="keyword">var</span> query=connection.query(<span class="string">'select * from users'</span>);</div><div class="line">query.on(<span class="string">'error'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">    <span class="keyword">throw</span> err;</div><div class="line">&#125;);</div><div class="line">query.on(<span class="string">'fields'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">fields</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(fields);</div><div class="line">&#125;);</div><div class="line">query.on(<span class="string">'result'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">row</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(row.name);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>有的时候我们需要对某一行进行处理时，为了不影响其他的数据，我们不得不对查询进行暂停进行相应的处理之后再进行恢复。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">query.on(<span class="string">'result'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">row</span>) </span>&#123;</div><div class="line">    connection.pause();</div><div class="line">    <span class="comment">// 指定处理的代码</span></div><div class="line">    <span class="built_in">console</span>.log(row);</div><div class="line">    connection.resume();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="通过条件来查询值"><a href="#通过条件来查询值" class="headerlink" title="通过条件来查询值"></a>通过条件来查询值</h4><p>有的时候我们需要采用指定查询的条件来过滤不需要的数据，同时我们要避免出现sql注入，在node-mysql当中有两种方式进行条件查询，第一种采用？来显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">connection.connect();</div><div class="line"> </div><div class="line"><span class="keyword">var</span> key = <span class="string">'zs'</span>; </div><div class="line"><span class="keyword">var</span> queryString = <span class="string">'SELECT * FROM users WHERE names = ?'</span>;</div><div class="line"> </div><div class="line">connection.query(queryString, [key], <span class="function"><span class="keyword">function</span>(<span class="params">err, rows, fields</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</div><div class="line"> </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> rows) &#123;</div><div class="line">        <span class="built_in">console</span>.log(rows[i]);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"> </div><div class="line">connection.end();</div></pre></td></tr></table></figure>
+<p>另一种方式是采用conection.escape()的方式 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">connection.connect();</div><div class="line"> </div><div class="line">var key = &apos;zs&apos;; </div><div class="line">var queryString = &apos;SELECT * FROM users WHERE name = &apos; + </div><div class="line">                   connection.escape(key);</div><div class="line"> </div><div class="line">connection.query(queryString, function(err, rows, fields) &#123;</div><div class="line">    if (err) throw err;</div><div class="line"> </div><div class="line">    for (var i in rows) &#123;</div><div class="line">        console.log(rows[i]);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> user=&#123;<span class="attr">name</span>:<span class="string">"ll"</span>,<span class="attr">password</span>:<span class="string">"1234adsf"</span>&#125;;</div><div class="line"><span class="keyword">var</span> query=connection.query(<span class="string">'insert into users set ?'</span>,user,<span class="function"><span class="keyword">function</span>(<span class="params">err,result</span>)</span>&#123;</div><div class="line"></div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(query.sql);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>insert into users set <code>name</code> = ‘ll’, <code>password</code> = ‘1234adsf’ //输出的query.sql语句</p>
+</blockquote>
+<h4 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h4><p>在操作完成之后我们需要对mysql进行关闭，同时我们必须要对一些非正常关闭进行相应的处理。</p>
+<pre><code class="js"><span class="comment">//不管是正常或者非正常的关闭都会触发close这个回调事件，</span>
+<span class="comment">//我们可以在触发close操作之后检查关闭的原因从而进行相应的处理</span>
+connection.on(<span class="string">'close'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>{
+  <span class="keyword">if</span> (err) {
+    <span class="comment">//倘若出现非正常关闭我们重新进行连接 </span>
+    connection = mysql.createConnection(connection.config);
+  } <span class="keyword">else</span> {
+    <span class="built_in">console</span>.log(<span class="string">'正常关闭.'</span>);
+  }
+});
+</code></pre>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/14/shell-动态进程守护/" rel="prev" title="shell 动态进程守护">
+                shell 动态进程守护 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="changshou.wen" />
+          <p class="site-author-name" itemprop="name">changshou.wen</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装node-mysql"><span class="nav-number">1.</span> <span class="nav-text">安装node-mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行第一个mysql-查询"><span class="nav-number">2.</span> <span class="nav-text">运行第一个mysql 查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过条件来查询值"><span class="nav-number">3.</span> <span class="nav-text">通过条件来查询值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据插入"><span class="nav-number">4.</span> <span class="nav-text">数据插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭连接"><span class="nav-number">5.</span> <span class="nav-text">关闭连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">changshou.wen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
