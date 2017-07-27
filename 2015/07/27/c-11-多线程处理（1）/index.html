@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="c++," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="犀牛" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="c++标准库中的多线程处理">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 11 多线程处理（1）">
+<meta property="og:url" content="http://yoursite.com/2015/07/27/c-11-多线程处理（1）/index.html">
+<meta property="og:site_name" content="犀牛">
+<meta property="og:description" content="c++标准库中的多线程处理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-07-07-14679022487444.jpg">
+<meta property="og:updated_time" content="2017-07-27T02:04:05.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c++ 11 多线程处理（1）">
+<meta name="twitter:description" content="c++标准库中的多线程处理">
+<meta name="twitter:image" content="http://o7ez1faxc.bkt.clouddn.com/2016-07-07-14679022487444.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/07/27/c-11-多线程处理（1）/"/>
+
+
+
+
+
+  <title>c++ 11 多线程处理（1） | 犀牛</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">犀牛</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/07/27/c-11-多线程处理（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="罗布">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="犀牛">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">c++ 11 多线程处理（1）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-27T10:03:28+08:00">
+                2015-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>c++标准库中的多线程处理<br><a id="more"></a></p>
+<h1 id="几种线程的方式"><a href="#几种线程的方式" class="headerlink" title="几种线程的方式"></a>几种线程的方式</h1><p>##创建线程</p>
+<h3 id="通过函数指针来创建一个线程"><a href="#通过函数指针来创建一个线程" class="headerlink" title="通过函数指针来创建一个线程"></a>通过函数指针来创建一个线程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread_function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"thread function Executing"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadobj</span><span class="params">(thread_function)</span></span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Display From MainTHread"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    threadobj.join();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Exit of Main function"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用函数对象创建一个线程"><a href="#使用函数对象创建一个线程" class="headerlink" title="使用函数对象创建一个线程"></a>使用函数对象创建一个线程</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;thread&gt;</div><div class="line">class DisplayThread&#123;</div><div class="line">    public:</div><div class="line">        void operator()()&#123;</div><div class="line">            for (int i = 0; i &lt; 10000; i++) &#123;</div><div class="line">                std::cout&lt;&lt;"Display Thread executing"&lt;&lt;std::endl;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main(int argc, char const* argv[])</div><div class="line">&#123;</div><div class="line">    std::thread threadobj((DisplayThread()));</div><div class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</div><div class="line">        std::cout&lt;&lt;"Display from main thread"&lt;&lt;std::endl;</div><div class="line">    &#125;</div><div class="line">    std::cout&lt;&lt;"Waiting for thread to complete"&lt;&lt;std::endl;</div><div class="line">    threadobj.join();</div><div class="line">    std::cout&lt;&lt;"Exiting from main thread"&lt;&lt;std::endl;</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用-匿名函数来创建线程"><a href="#使用-匿名函数来创建线程" class="headerlink" title="使用 匿名函数来创建线程"></a>使用 匿名函数来创建线程</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;thread&gt;</div><div class="line">int main()&#123;</div><div class="line">    int x=9;</div><div class="line">    std::thread threadObj([]&#123;</div><div class="line">            for (int i=0;i&lt;10000;i++)</div><div class="line">            std::cout&lt;&lt;"Display thread executeing"&lt;&lt;std::endl;</div><div class="line">            &#125;);</div><div class="line">    for (int i = 0; i &lt; 10000; i++) &#123;</div><div class="line">        std::cout&lt;&lt;"Display from main thread"&lt;&lt;std::endl;</div><div class="line">    &#125;</div><div class="line">    threadObj.join();</div><div class="line">    std::cout&lt;&lt;"Exiting from Main Thread"&lt;&lt;std::endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="不同线程之间的区别"><a href="#不同线程之间的区别" class="headerlink" title="不同线程之间的区别"></a>不同线程之间的区别</h3><p>第一个线程都会有一个ID<br>成员函数指定关联线程对象的ID<br><strong>std::thread::get_id()</strong><br>给出当前函数的标识符<br><strong>std::this_thread::get_id()</strong></p>
+<p>如果std::thread 对象没有任何关联的线程，get_id会返回一个默认的构造的std::thread::id对象<br>std::thread::id是一个对象，可以比较和输出<br><strong>示例代码</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread_function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Thread :: ID="</span>&lt;&lt;<span class="built_in">std</span>::this_thread::get_id()&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadObj1</span><span class="params">(thread_function)</span></span>;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadObj2</span><span class="params">(thread_function)</span></span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(threadObj1.get_id()!=threadObj2.get_id())</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"BOth threads have diferent IDs"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"From Main thread :: id of thread 1="</span>&lt;&lt;threadObj1.get_id()&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"From Main thread :: id of thread 2="</span>&lt;&lt;threadObj2.get_id()&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="加入和分离线程"><a href="#加入和分离线程" class="headerlink" title="加入和分离线程"></a>加入和分离线程</h2><p><strong>joining 线程</strong><br>一旦线程开始启动之后，其他的线程可以等待这个新的线程完成。等到其他的线程调用 join()函数</p>
+<p>std::thread th(funPtr);<br>th.join()<br>我们来看一个示例<br>假设主线程已经启动了10个线程，直到所有的线程结束之后再退出。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> &#123;</span></div><div class="line"></div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Worker Thread "</span>&lt;&lt;<span class="built_in">std</span>::this_thread::get_id()&lt;&lt;<span class="string">" is Executing "</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::thread&gt; threadList;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">        threadList.push_back(<span class="built_in">std</span>::thread(WorkerThread()));</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"等待所有的工作线程完成"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::for_each(threadList.begin(),threadList.end(),<span class="built_in">std</span>::mem_fn(&amp;<span class="built_in">std</span>::thread::join));</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"退出主线程"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>分离线程</strong><br>分享之后的线程也称做后台进程。分离一个线程我们需要调用 std::detach()函数<br>&gt;<br>std::thread th(funcPtr);<br>th.detach();</p>
+<p>一旦分享之后并不会再跟主线程关联<br><strong>所以我们需要小心的使用detach()和join() 避免出现不可预知的问题</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;thread&gt;</div><div class="line">#include &lt;algorithm&gt;</div><div class="line">#include &lt;vector&gt;</div><div class="line">class WorkerThread &#123;</div><div class="line"></div><div class="line">    public:</div><div class="line">        void operator()()&#123;</div><div class="line">            std::cout&lt;&lt;"Worker Thread "&lt;&lt;std::this_thread::get_id()&lt;&lt;" is Executing "&lt;&lt;std::endl;</div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">int main(int argc, char const* argv[])</div><div class="line">&#123;</div><div class="line">    std::thread threadObj((WorkerThread()));</div><div class="line">    if ( threadObj.joinable() )</div><div class="line">    &#123;</div><div class="line">        std::cout&lt;&lt;"Detaching Thread "&lt;&lt;std::endl;</div><div class="line">        threadObj.detach();</div><div class="line">    &#125;</div><div class="line">    if ( threadObj.joinable() )</div><div class="line">    &#123;</div><div class="line">        std::cout&lt;&lt;"Detaching Thread "&lt;&lt;std::endl;</div><div class="line">        threadObj.detach();</div><div class="line">    &#125;</div><div class="line">    std::thread threadObj2((WorkerThread()));</div><div class="line">    if ( threadObj2.joinable() )</div><div class="line">    &#123;</div><div class="line">        std::cout&lt;&lt;"Detaching Thread "&lt;&lt;std::endl;</div><div class="line">        threadObj2.detach();</div><div class="line">    &#125;</div><div class="line">    if ( threadObj2.joinable() )</div><div class="line">    &#123;</div><div class="line">        std::cout&lt;&lt;"Detaching Thread "&lt;&lt;std::endl;</div><div class="line">        threadObj2.detach();</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadRAII</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::thread &amp; m_thread;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        ThreadRAII(<span class="built_in">std</span>::thread  &amp; threadObj) : m_thread(threadObj)</div><div class="line">        &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        ~ThreadRAII()</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 判断线程是否可被分离</span></div><div class="line">            <span class="keyword">if</span>(m_thread.joinable())</div><div class="line">            &#123;</div><div class="line">                m_thread.detach();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread_function</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++)</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"thread_function Executing"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadObj</span><span class="params">(thread_function)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果我们注释这行程序并会崩溃</span></div><div class="line">    <span class="function">ThreadRAII <span class="title">wrapperObj</span><span class="params">(threadObj)</span></span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="传递参数给线程"><a href="#传递参数给线程" class="headerlink" title="传递参数给线程"></a>传递参数给线程</h2><p>其中chrono原是boost的一个时间处理的库，现已成为c++ 11的标准了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">newThreadCallback</span><span class="params">(<span class="keyword">int</span> *p)</span></span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Thread :"</span><span class="string">":p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">	    <span class="built_in">std</span>::chrono::<span class="function">milliseconds <span class="title">dura</span><span class="params">(<span class="number">10000</span>)</span></span>;</div><div class="line">    <span class="built_in">std</span>::this_thread::sleep_for(dura);</div><div class="line">    *p=<span class="number">19</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">startNewThtread</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> i=<span class="number">10</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Main Thread:"</span><span class="string">":i= "</span>&lt;&lt;i&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">(newThreadCallback,&amp;i)</span></span>;</div><div class="line">    t.detach();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Main Thread : "</span><span class="string">": i="</span>&lt;&lt;i&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    startNewThtread();</div><div class="line">    <span class="built_in">std</span>::chrono::<span class="function">milliseconds <span class="title">dura</span><span class="params">(<span class="number">2000</span>)</span></span>;</div><div class="line">    <span class="built_in">std</span>::this_thread::sleep_for(dura);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有的时候我们需要注意的是，当你将一个对象的指针传递给一个线程时，而这个对象可能在传递的线程之外被删除，那么该线程再次访问的时候会出现段错误。比如说下面的这段程序<br><img src="http://o7ez1faxc.bkt.clouddn.com/2016-07-07-14679022487444.jpg" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">newThreadCallback</span><span class="params">(<span class="keyword">int</span>* p)</span></span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"inside Thread :"</span><span class="string">":p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::chrono::<span class="function">milliseconds <span class="title">dura</span><span class="params">(<span class="number">1000</span>)</span></span>;</div><div class="line">    <span class="built_in">std</span>::this_thread::sleep_for(dura);</div><div class="line">    *p=<span class="number">19</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">startNewThread</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> *p=<span class="keyword">new</span> <span class="keyword">int</span>();</div><div class="line">    *p=<span class="number">10</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Main Thread:"</span><span class="string">":*p="</span>&lt;&lt;*p&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">(newThreadCallback,p)</span></span>;</div><div class="line">    t.detach();</div><div class="line">    <span class="keyword">delete</span> p;</div><div class="line">    p=<span class="literal">NULL</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    startNewThread();</div><div class="line">    <span class="built_in">std</span>::chrono::<span class="function">milliseconds <span class="title">dura</span><span class="params">(<span class="number">2000</span>)</span></span>;</div><div class="line">    <span class="built_in">std</span>::this_thread::sleep_for(dura);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="给线程传递一个形参"><a href="#给线程传递一个形参" class="headerlink" title="给线程传递一个形参"></a>给线程传递一个形参</h2><p>有的时候我们需要在程序中将某一些对象添加到某一线程的堆栈当中，一旦在线程里面更新并可以同步到主线程当中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">threadCallback</span><span class="params">(<span class="keyword">int</span> <span class="keyword">const</span> &amp; x)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> &amp;y=<span class="keyword">const_cast</span>&lt;<span class="keyword">int</span> &amp;&gt;(x);</div><div class="line">    y++;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside Thread x="</span>&lt;&lt;x&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">9</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"In main thread :before thread start x ="</span>&lt;&lt;x&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadObj</span><span class="params">(threadCallback,x)</span></span>;</div><div class="line">    threadObj.join();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"In main thread : after thread joins x="</span>&lt;&lt;x&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>输出</strong><br>In main thread :before thread start x =9<br>Inside Thread x=10<br>In main thread : after thread joins x=9</p>
+<p>上面的程序看似threadCallback接收一个形参，在传递给threadCallback的时候线程会复制一个临时的值，更改该值并不影响外面的变量</p>
+<p>倘若我们需要实际在线程里面改变外部的值，需要通过std::ref()的方式来传递值。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;thread&gt;</div><div class="line">void threadCallback(int const &amp; x)&#123;</div><div class="line">    int &amp;y=const_cast&lt;int &amp;&gt;(x);</div><div class="line">    y++;</div><div class="line">    std::cout&lt;&lt;"Inside thread x ="&lt;&lt;x&lt;&lt;std::endl;</div><div class="line">&#125;</div><div class="line">int main(int argc, char const* argv[])</div><div class="line">&#123;</div><div class="line">    int x=9;</div><div class="line">    std::cout&lt;&lt;"in main thread:before thread start x="&lt;&lt;x&lt;&lt;std::endl;</div><div class="line">    std::thread threadObj(threadCallback,std::ref(x));</div><div class="line">    threadObj.join();</div><div class="line">    std::cout&lt;&lt;"In Main Thread :After thread joins x ="&lt;&lt;x&lt;&lt;std::endl;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>输出：</strong><br>in main thread:before thread start x=9<br>Inside thread x =10<br>In Main Thread :After thread joins x =10</p>
+<h2 id="实现一个线程类的功能"><a href="#实现一个线程类的功能" class="headerlink" title="实现一个线程类的功能"></a>实现一个线程类的功能</h2><p>在创建的thread的时候其中第一项传递的是成员函数做为线程的回调函数，而第二项传递的是操作的对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DummyClass</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    DummyClass()</div><div class="line">    &#123;&#125;</div><div class="line">    DummyClass(<span class="keyword">const</span> DummyClass &amp; obj)</div><div class="line">    &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sampleMemberFunction</span><span class="params">(<span class="keyword">int</span> x)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"Inside sampleMemberFunction "</span>&lt;&lt;x&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    DummyClass dummyObj;</div><div class="line">    <span class="keyword">int</span> x = <span class="number">10</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">threadObj</span><span class="params">(&amp;DummyClass::sampleMemberFunction,&amp;dummyObj, x)</span></span>;</div><div class="line">    threadObj.join();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag"># c++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/26/python实现一个简单的爬虫搜索功能/" rel="next" title="python实现一个简单的爬虫搜索功能">
+                <i class="fa fa-chevron-left"></i> python实现一个简单的爬虫搜索功能
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/26/docker-初级教程/" rel="prev" title="docker 初级教程">
+                docker 初级教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="罗布" />
+          <p class="site-author-name" itemprop="name">罗布</p>
+           
+              <p class="site-description motion-element" itemprop="description">个人博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#几种线程的方式"><span class="nav-number">1.</span> <span class="nav-text">几种线程的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过函数指针来创建一个线程"><span class="nav-number">1.0.1.</span> <span class="nav-text">通过函数指针来创建一个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用函数对象创建一个线程"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用函数对象创建一个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-匿名函数来创建线程"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用 匿名函数来创建线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同线程之间的区别"><span class="nav-number">1.0.4.</span> <span class="nav-text">不同线程之间的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入和分离线程"><span class="nav-number">1.1.</span> <span class="nav-text">加入和分离线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传递参数给线程"><span class="nav-number">1.2.</span> <span class="nav-text">传递参数给线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给线程传递一个形参"><span class="nav-number">1.3.</span> <span class="nav-text">给线程传递一个形参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现一个线程类的功能"><span class="nav-number">1.4.</span> <span class="nav-text">实现一个线程类的功能</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">罗布</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
